@@ -18,6 +18,7 @@
                         <td>ID</td> 
                         <td>TITULO</td>
                         <td>GÊNERO</td>
+                        <td>&nbsp;</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,6 +27,10 @@
                             <td>${l.id}</td>
                             <td>${l.titulo}</td>
                             <td>${l.genero.nome}</td>
+                            <td>
+                                <a href="/livros/update/${l.id}" class="btn btn-default">Editar</a>
+                                <a href="/livros/delete/${l.id}" class="btn btn-danger">Remover</a>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
