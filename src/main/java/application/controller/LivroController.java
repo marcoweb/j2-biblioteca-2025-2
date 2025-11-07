@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import application.model.Autor;
 import application.model.Genero;
 import application.model.Livro;
+import application.repository.AutorRepository;
 import application.repository.GeneroRepository;
 import application.repository.LivroRepository;
 
@@ -22,6 +24,8 @@ public class LivroController {
     private LivroRepository livroRepo;
     @Autowired
     private GeneroRepository generoRepo;
+    @Autowired
+    private AutorRepository autorRepo;
 
     @RequestMapping("/list")
     public String list(Model ui) {
@@ -32,13 +36,15 @@ public class LivroController {
     @RequestMapping("/insert")
     public String insert(Model ui) {
         ui.addAttribute("generos", generoRepo.findAll());
+        ui.addAttribute("autores", autorRepo.findAll());
         return "/livros/insert";
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String insert(
         @RequestParam("titulo") String titulo,
-        @RequestParam("genero_id") long generoId) {
+        @RequestParam("genero_id") long generoId,
+        @RequestParam("autores") long[] autoresIds) {
 
         Optional<Genero> generoResult = generoRepo.findById(generoId);
 
@@ -46,6 +52,13 @@ public class LivroController {
             Livro livro = new Livro();
             livro.setTitulo(titulo);
             livro.setGenero(generoResult.get());
+
+            for(long a_id : autoresIds) {
+                Optional<Autor> resultAutor = autorRepo.findById(a_id);
+                if(resultAutor.isPresent()) {
+                    livro.getAutores().add(resultAutor.get());
+                }
+            }
 
             livroRepo.save(livro);
         }
