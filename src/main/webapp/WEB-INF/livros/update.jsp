@@ -25,6 +25,16 @@
                         </c:forEach>
                     </select>
                 </div>
+
+                <div>
+                    <label class="form-label">Autores</label>
+                    <c:forEach var="a" items="${autores}">
+                        <div class="form-check">
+                            <input ${livro.autores.contains(a) ? "checked" : ""} type="checkbox" name="autores" value="${a.id}" class="form-check-input" />
+                            <label class="form-check-label">${a.nome}</label>
+                        </div>
+                    </c:forEach>
+                </div>
                 <br />
                 <button type="submit" class="btn btn-success">Salvar</button>
             </form>

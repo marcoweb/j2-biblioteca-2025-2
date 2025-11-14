@@ -35,7 +35,7 @@
                             </td>
                             
                             <td>
-                                <a href="/livros/update/${l.id}" class="btn btn-default">Editar</a>
+                                <a href="/livros/update/${l.id}" class="btn btn-warning">Editar</a>
                                 <a href="/livros/delete/${l.id}" class="btn btn-danger">Remover</a>
                             </td>
                         </tr>

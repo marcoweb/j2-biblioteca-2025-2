@@ -1,8 +1,11 @@
 package application.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,5 +36,15 @@ public class AutorController {
     public String list(Model ui) {
         ui.addAttribute("autores", autorRepo.findAll());
         return "/autores/list";
+    }
+
+    @RequestMapping("/list/{id}")
+    public String listOne(@PathVariable long id, Model ui) {
+        Optional<Autor> autorResult = autorRepo.findById(id);
+        if(autorResult.isPresent()) {
+            ui.addAttribute("autor", autorResult.get());
+            return "/autores/listOne";
+        }
+        return "redirect:/autores/list";
     }
 }
